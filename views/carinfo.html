@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <% include ./ejs/header.ejs %>
+    <% include ./ejs/headermenu.ejs %>
+    <% include ./ejs/serializeObject.ejs %>
+    <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            padding-bottom: 70px;
+        }
+
+        .carousel {
+            width: 70%;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        /* Make the image fully responsive */
+        .carousel-inner {
+            text-align: center;
+        }
+
+        .carousel-inner img {
+            width: 71.4%;
+            height: 71.4%;
+            border-radius: 20px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            height: 100px;
+            width: 100px;
+            background-image: none;
+        }
+
+        .carousel-control-next-icon:after {
+            content: '>';
+            font-size: 4.29vw;
+            color: red;
+        }
+
+        .carousel-control-prev-icon:after {
+            content: '<';
+            font-size: 4.29vw;
+            color: red;
+        }
+
+        .margincol .submargincol {
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <% include ./ejs/bodymenu.ejs %>
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="<%= cardetail.slide1 %>">
+            </div>
+            <div class="carousel-item">
+                <img src="<%= cardetail.slide2 %>">
+            </div>
+            <div class="carousel-item">
+                <img src="<%= cardetail.slide3 %>">
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+    <% if (cardetail.downmodel) { %>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3" style="padding: 0; margin-right: 10px;">
+            <div class="row" style="line-height: 50px;">
+                <div class="col">
+                    <img src="<%= cardetail.logo %>">
+                    <span
+                        style="font-weight: bold; font-size: 1.326vw;">&nbsp;&nbsp;<%= cardetail.brand %>&nbsp;&nbsp;&nbsp;</span>
+                    <span style="font-size: 1.014vw; color: rgb(114, 114, 114);"><%= cardetail.origin %> │
+                        <%= cardetail.size %></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 2.34vw; font-weight: bold;"><%= cardetail.model %></span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <% if (cardetail.price == '가격정보없음') { %>
+                    <span
+                        style="font-size: 1.56vw;font-weight: bold; color: rgb(141, 141, 141);"><%= cardetail.price %></span>
+
+                    <%} else { %>
+                    <span style="font-size: 1.56vw;font-weight: bold; color: green;"><%= cardetail.price %></span>
+                    <%}%>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2" style="font-size: 1.014vw; line-height: 25px; color: grey;">
+                    <br>
+                    연비<br>
+                    연료<br>
+                    출력<br>
+                    판매
+                </div>
+                <div class="col-9" style="line-height: 25px;">
+                    <br>
+                    <%= cardetail.mileage %><br>
+                    <%= cardetail.fuel %><br>
+                    <%= cardetail.output %><br>
+                    <%= cardetail.sale %>
+                </div>
+            </div>
+        </div>
+        <div class="col-7" style="font-size: 1.95vw; font-weight: bold;">
+            제원/가격
+            <div class="row cartable"
+                style="font-size: 1.17vw; border-top: 1px solid black; padding: 5px 0; margin: 15px 0 0 0; color: grey; font-weight: bold;">
+                <div class="col-3 margincol">
+                    <div class="row" style="padding-bottom: 5px; padding-top: 5px;">
+                        <div class="col">
+                            모델명
+                        </div>
+                    </div>
+                    <% for (let i=0; cardetail.downmodel[i]; i++) { %>
+                    <div class="row">
+                        <div class="col submargincol"
+                            style="color: black; border-top: 1px solid rgb(207, 207, 207); padding-left: 15px;">
+                            <%= cardetail.downmodel[i].name %>
+                        </div>
+                    </div>
+                    <% if (!cardetail.downmodel[i]) break; %>
+                    <%}%>
+                </div>
+                <div class="col-9 margincol">
+                    <div class="row" style="padding-bottom: 5px; padding-top: 5px;">
+                        <div class="col-3">
+                            배기량
+                        </div>
+                        <div class="col-3">
+                            최대출력
+                        </div>
+                        <div class="col-3">
+                            연비
+                        </div>
+                        <div class="col-3">
+                            출시가
+                        </div>
+                    </div>
+                    <% for (let j=0; cardetail.downmodel[j]; j++) { %>
+                    <% if (!cardetail.downmodel[j]) break; %>
+                    <div class="row submargincol" style="border-top: 1px solid rgb(207, 207, 207);">
+                        <div class="col-3" style="color: black; font-weight: normal;">
+                            <%= cardetail.downmodel[j].displacement %>
+                        </div>
+                        <div class="col-3" style="color: black; font-weight: normal;">
+                            <%= cardetail.downmodel[j].maxoutput %>
+                        </div>
+                        <div class="col-3" style="color: black; font-weight: normal;">
+                            <%= cardetail.downmodel[j].mileage %>
+                        </div>
+                        <% if (cardetail.downmodel[j].price == '가격정보없음') {%>
+                        <div class="col-3" style="color: grey; font-weight: normal;">
+                            <%= cardetail.downmodel[j].price %>
+                        </div>
+                        <%} else {%>
+                        <div class="col-3" style="color: green; font-weight: normal;">
+                            <%= cardetail.downmodel[j].price %>
+                        </div>
+                        <%}%>
+                    </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <% } %>
+    <% if (!cardetail.downmodel) {%>
+        <div style="margin: 0 auto !important; width: 35%;">
+            <div class="row" style="line-height: 50px;">
+                <div class="col">
+                    <img src="<%= cardetail.logo %>">
+                    <span
+                        style="font-weight: bold; font-size: 1.326vw;">&nbsp;&nbsp;<%= cardetail.brand %>&nbsp;&nbsp;&nbsp;</span>
+                    <span style="font-size: 1.014vw; color: rgb(114, 114, 114);"><%= cardetail.origin %> │
+                        <%= cardetail.size %></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 2.34vw; font-weight: bold;"><%= cardetail.model %></span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <% if (cardetail.price == '가격정보없음') { %>
+                    <span
+                        style="font-size: 1.56vw;font-weight: bold; color: rgb(141, 141, 141);"><%= cardetail.price %></span>
+
+                    <%} else { %>
+                    <span style="font-size: 1.56vw;font-weight: bold; color: green;"><%= cardetail.price %></span>
+                    <%}%>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2" style="font-size: 1.014vw; line-height: 25px; color: grey;">
+                    <br>
+                    연비<br>
+                    연료<br>
+                    출력<br>
+                    판매
+                </div>
+                <div class="col-9" style="line-height: 25px;">
+                    <br>
+                    <%= cardetail.mileage %><br>
+                    <%= cardetail.fuel %><br>
+                    <%= cardetail.output %><br>
+                    <%= cardetail.sale %>
+                </div>
+            </div>
+        </div>
+    <% } %>
+</body>
+
+</html>

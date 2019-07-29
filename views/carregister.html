@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <% include ./ejs/header.ejs %>
+    <% include ./ejs/headermenu.ejs %>
+    <% include ./ejs/serializeObject.ejs %>
+    <% include ./ejs/slideshowcss.ejs %>
+    <style>
+        .welcome {
+            margin: 35px 0;
+            text-align: center;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 4px;
+        }
+
+        .loginbox {
+            width: 31vw;
+            border-radius: 5px;
+            border: 1px solid rgb(216, 216, 216);
+            padding: 10px 0;
+        }
+
+        .whattoinput {
+            font-family: 'Nanum Gothic', sans-serif;
+            color: rgb(173, 77, 13);
+            font-size: 15px;
+        }
+
+        .loginbox form input[type='text'],
+        .loginbox form input[type='password'],
+        input[type='submit'] {
+            border-radius: 5px;
+            margin-bottom: 15px;
+            outline: none;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        .loginbox form input:focus {
+            box-shadow: 0px 0px 5px #ffb67b;
+        }
+
+        input[type='submit'] {
+            color: white;
+            margin-top: 35px;
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: rgb(212, 50, 1);
+            border: 1px solid rgb(212, 50, 1);
+        }
+
+        input[type='file'] input {
+            background-color: rgb(212, 50, 1);
+        }
+
+        label {
+            cursor: pointer;
+            margin: 8px 0 8px 0;
+            width: 35%;
+            height: 30px;
+            line-height: 30px;
+            background-color: rgb(233, 93, 50);
+            border-radius: 6px;
+            font-family: 'Nanum Gothic', sans-serif;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        #profileimg {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <% include ./ejs/carregmenu.ejs %>
+    <div class="container loginbox" style="margin-top: 20px;">
+        <!-- 데이터 전송시 가장 깔끔한 순서 form POST >>> ajax POST -->
+        <form action="/signin" method="POST" style="padding: 0 25px;" id="loginput" enctype="multipart/form-data">
+            <span class="whattoinput">중고차 사진</span><br>
+            <label for="profileimg" id="imglabel">차 사진 등록</label><br>
+            <img id="imgpreview" width="50%" style="display: block; margin: 10px auto; border-radius: 15px;"><br>
+            <input type="file" name="carimg" id="profileimg" accept="image/*" onchange="loadFile(event)" required>
+            <span class="whattoinput">브랜드</span><br>
+            <input type="text" placeholder="ex) 메르세데스-벤츠" name="brand"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">모델명</span><br>
+            <input type="text" placeholder="ex) 2020 벤츠 GLB 클래스" name="model" style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">수입/국산</span><br>
+            <input type="text" placeholder="ex) 수입" name="origin"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">사이즈</span><br>
+            <input type="text" placeholder="ex) 소형/중형/준중형/대형..." name="size"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">가격 정보</span><br>
+            <input type="text" placeholder="ex) 출시가 7,340만원" name="price"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">연비</span><br>
+            <input type="text" placeholder="ex) 9.4km/ℓ" name="mileage"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">연료</span><br>
+            <input type="text" placeholder="ex) 디젤, 가솔린" name="fuel"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <span class="whattoinput">출력</span><br>
+            <input type="text" placeholder="150~224hp" name="output"
+                style="border: 1px solid rgb(216, 216, 216);" required><br>
+            <input type="submit" value="중고차 등록">
+        </form>
+    </div>
+    <script>
+        var loadFile = function (event) {
+            $('#imglabel').text($('#profileimg')[0].files[0].name);
+            document.getElementById('imgpreview').src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+</body>
+
+</html>
